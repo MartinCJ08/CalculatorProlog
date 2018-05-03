@@ -46,8 +46,36 @@ Resul is Ac/Bc,
 send(C,selection,Resul).
 %% div(A,_,C):-send(C,selection,0).
 %% div(_,_,C):-send(C,selection,0).
+%% algorimo de euclides
+mcd(A,A,A):-send(A,selection,A).
+mcd(A,0,C):-C=A,
+send(C,selection,C).
+mcd(A,B,C):-A>B,
+X is A mod B,
+mcd(B,X,C).
+mcd(A,B,C):-A<B,
+X is B mod A,
+mcd(A,X,C).
 
+fact(1,F,F):- !.
+fact(N,T,F):-N2 is N-1,T2 is T * N,
+fact(N2, T2,F).
 
+modu(A,B,C):-atom_number(A,Ac),
+atom_number(B,Bc),
+Resul is Ac mod Bc,
+writeln(Resul),
+send(C,selection,Resul).
+
+modu(A,_,C):-atom_number(A,Ac),
+Resul is Ac,
+send(C,selection,Resul).
+
+modu(_,B,C):-atom_number(B,Bc),
+Resul is Bc,
+send(C,selection,Resul).
+
+modu(_,_,C):-send(C,selection,0).
 
 
 
@@ -66,8 +94,8 @@ new(BtnMul,button('Multiplicar',message(@prolog,mult,TxtA?selection,TxtB?selecti
 new(BtnDiv,button('Dividir',message(@prolog,div,TxtA?selection,TxtB?selection,TxtC))),
 new(BtnFact,button('Factorial',message(@prolog,alv))),
 new(BtnPot,button('Potencia',message(@prolog,alv))),
-new(BtnMcd,button('MCD',message(@prolog,alv))),
-new(BtnMod,button('Modulo',message(@prolog,alv))),
+new(BtnMcd,button('MCD',message(@prolog,mcd,TxtA?selection,TxtB?selection,TxtC))),
+new(BtnMod,button('Modulo',message(@prolog,modu,TxtA?selection,TxtB?selection,TxtC))),
 %% new(BtnFact,button('Factorial',message(@prolog,alv))),
 %% new(BtnFact,button('Factorial',message(@prolog,alv))),
 new(BtnExit,button('Exit',message(D,destroy))),
