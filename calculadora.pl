@@ -57,7 +57,7 @@ mcd(A,B,C):-A<B,
 X is B mod A,
 mcd(A,X,C).
 
-fact(1,F,F):- !.
+fact(1,F,F):- writeln(F).
 fact(N,T,F):-N2 is N-1,T2 is T * N,
 fact(N2, T2,F).
 
@@ -77,6 +77,16 @@ send(C,selection,Resul).
 
 modu(_,_,C):-send(C,selection,0).
 
+pot(A,B,C):-atom_number(A,Ac),
+atom_number(B,Bc),
+Resul is Ac^Bc,
+send(C,selection,Resul).
+
+
+raiz(A,_,C):-atom_number(A,Ac),
+atom_number('0.5',S),
+Resul is Ac^S,
+send(C,selection,Resul).
 
 
 
@@ -92,16 +102,16 @@ new(BtnSum,button('Plus',message(@prolog,sum,TxtA?selection,TxtB?selection,TxtC)
 new(BtnRest,button('Restar',message(@prolog,rest,TxtA?selection,TxtB?selection,TxtC))),
 new(BtnMul,button('Multiplicar',message(@prolog,mult,TxtA?selection,TxtB?selection,TxtC))),
 new(BtnDiv,button('Dividir',message(@prolog,div,TxtA?selection,TxtB?selection,TxtC))),
-new(BtnFact,button('Factorial',message(@prolog,alv))),
-new(BtnPot,button('Potencia',message(@prolog,alv))),
+new(BtnFact,button('Factorial',message(@prolog,fact,TxtA?selection,1,TxtC))),
+new(BtnPot,button('Potencia',message(@prolog,pot,TxtA?selection,TxtB?selection,TxtC))),
 new(BtnMcd,button('MCD',message(@prolog,mcd,TxtA?selection,TxtB?selection,TxtC))),
 new(BtnMod,button('Modulo',message(@prolog,modu,TxtA?selection,TxtB?selection,TxtC))),
-%% new(BtnFact,button('Factorial',message(@prolog,alv))),
+new(BtnSqr,button('SQRT',message(@prolog,raiz,TxtA?selection,TxtB?selection,TxtC))),
 %% new(BtnFact,button('Factorial',message(@prolog,alv))),
 new(BtnExit,button('Exit',message(D,destroy))),
 
 send_list(D,append,[TxtA,TxtB,TxtC,BtnSum,BtnRest,
-	BtnMul,BtnDiv,BtnFact,BtnPot,BtnMcd,BtnMod,BtnExit]),
+	BtnMul,BtnDiv,BtnFact,BtnPot,BtnMcd,BtnMod,BtnSqr,BtnExit]),
 
 send(BtnDiv,below,BtnMul),
 send(BtnMcd,below,BtnPot),
